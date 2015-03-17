@@ -44,7 +44,7 @@ menuExit = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\
             |_____________|  |_____________|  |_____________|
 \n\n\n\n\n\n\n"""
 
-# 18 lines of rules are shown at a time.
+# 16 lines of rules are shown at a time. Not including top line and ok button
 rules = ["\t\t\t\t  RULES:",
          " ",
          "Players:",
@@ -78,7 +78,7 @@ rules = ["\t\t\t\t  RULES:",
          " ",
          "When a player reaches a total of 100 or more points, that player is the winner,",
          "and the game ends."]
-okButton = """
+okButtonRules = """
                                  ____________
           TIP:                  |            |
  Use the up and down arrow      |    >OK<    |

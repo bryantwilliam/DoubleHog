@@ -24,8 +24,8 @@ menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii
 
 def startGame():
     pass
-    #TODO:
-    #Create game.
+    # TODO:
+    # Create game.
 
 def displayRules():
     rules = Ascii.rules
@@ -40,7 +40,7 @@ def displayRules():
             print(rules[0])
             for lineNumber in range(min, max):
                 print(rules[lineNumber])
-            print(Ascii.okButton)
+            print(Ascii.okButtonRules)
             changed = False
         key = ord(getch())
         if key == ENTER_KEY:
@@ -81,19 +81,19 @@ def init():
             states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
             if key == LEFT_KEY:
                 if states.index(currentState) == 0:
-                    currentState =  states[2]
+                    currentState = states[2]
                 else:
-                    currentState =  states[states.index(currentState) - 1]
+                    currentState = states[states.index(currentState) - 1]
             elif key == RIGHT_KEY:
                 if states.index(currentState) == 2:
-                    currentState =  states[0]
+                    currentState = states[0]
 
                 else:
-                    currentState =  states[states.index(currentState) + 1]
+                    currentState = states[states.index(currentState) + 1]
             Ascii.clear()
             print(currentState)
 
 
-#if the file is the main file then start the program
+# if the file is the main file then start the program
 if __name__ == '__main__':
     init()
