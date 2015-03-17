@@ -49,7 +49,7 @@ def displayRules():
                 min += 1
                 max += 1
                 changed = True
-        elif key == UP_KEY or key == RIGHT_KEY:
+        elif key == UP_KEY or key == LEFT_KEY:
             if min != 1:
                 min -= 1
                 max -= 1
