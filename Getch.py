@@ -18,13 +18,11 @@ class _Getch:
         except ImportError:
             self.impl = _GetchUnix()
 
-    def __call__(self): return self.impl()
+    def __call__(self):
+        return self.impl()
 
 
 class _GetchUnix:
-    def __init__(self):
-        import tty, sys
-
     def __call__(self):
         import sys, tty, termios
         fd = sys.stdin.fileno()
@@ -39,9 +37,10 @@ class _GetchUnix:
 
 class _GetchWindows:
     def __init__(self):
+        # noinspection PyUnresolvedReferences
         import msvcrt
 
-
     def __call__(self):
+        # noinspection PyUnresolvedReferences
         import msvcrt
         return msvcrt.getch()
