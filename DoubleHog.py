@@ -24,6 +24,8 @@ menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii
 
 def startGame():
     pass
+    #TODO:
+    #Create game.
 
 def displayRules():
     rules = Ascii.rules
