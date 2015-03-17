@@ -1,2 +1,3 @@
-Do not run this file in the python IDLE. It needs to be run in the console interpreter.
+Do not run this game in the python IDLE. It needs to be run in the console interpreter.
 In Microsoft CMD or a Unix Shell. If you do run it in the IDLE then it will create a continuous loop of terminals.
+To run this game simply double click on DoubleHog.py or run it with python.exe (commandline)
