@@ -14,8 +14,7 @@ def clear():
     Clears the console screen using the built in commands on a operating
     system (here linux and windows)
     """
-    for i in range(3):
-        print(chr(27) + "[2J")
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 menuStart = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\n
