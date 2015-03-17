@@ -36,6 +36,7 @@ def getNewState(key, currentState):
 def init():
     getch = Getch._Getch()
     currentState = menuStates.START
+    Ascii.clear()
     print(Ascii.menuStart)
 
     pressedEnter = False

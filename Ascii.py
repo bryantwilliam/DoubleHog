@@ -17,24 +17,24 @@ def clear():
     """
     os.system(['clear','cls', "^L"][os.name == 'nt'])
 
-menuStart = """\nUse the arrow keys...\n\n\n\n\n\n\n\n
-     _____________    _____________    _____________
-    |             |  |             |  |             |
-    |>Play a game<|  |  See rules  |  |    Exit     |
-    |_____________|  |_____________|  |_____________|
+menuStart = """\nUse the arrow keys...\n\n\n\n\n\t\t\tWelcome to Double Hog!!!\n\n\n
+             _____________    _____________    _____________
+            |             |  |             |  |             |
+            |>Play a game<|  |  See rules  |  |    Exit     |
+            |_____________|  |_____________|  |_____________|
 """
 
-menuRules = """\nUse the arrow keys...\n\n\n\n\n\n\n\n
-     _____________    _____________    _____________
-    |             |  |             |  |             |
-    | Play a game |  | >See rules< |  |    Exit     |
-    |_____________|  |_____________|  |_____________|
+menuRules = """\nUse the arrow keys...\n\n\n\n\n\t\t\tWelcome to Double Hog!!!\n\n\n
+             _____________    _____________    _____________
+            |             |  |             |  |             |
+            | Play a game |  | >See rules< |  |    Exit     |
+            |_____________|  |_____________|  |_____________|
 """
 
-menuExit = """\nUse the arrow keys...\n\n\n\n\n\n\n\n
-     _____________    _____________    _____________
-    |             |  |             |  |             |
-    | Play a game |  |  See rules  |  |   >Exit<    |
-    |_____________|  |_____________|  |_____________|
+menuExit = """\nUse the arrow keys...\n\n\n\n\n\t\t\tWelcome to Double Hog!!!\n\n\n
+             _____________    _____________    _____________
+            |             |  |             |  |             |
+            | Play a game |  |  See rules  |  |   >Exit<    |
+            |_____________|  |_____________|  |_____________|
 """
 
