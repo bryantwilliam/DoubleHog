@@ -16,26 +16,41 @@ elif platform.system() == "Linux":
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
+
+def startGame():
+    pass
+
+def displayRules():
+    Ascii.clear()
+    print(Ascii.rules)
+    print(Ascii.okButton)
+    getch = Getch._Getch()
+    while True:
+        key = ord(getch())
+        if key == ENTER_KEY:
+            init()
+            break
+
+
 def init():
     getch = Getch._Getch()
     currentState = menuStates.START
     Ascii.clear()
     print(Ascii.menuStart)
 
-    pressedEnter = False
-    while pressedEnter == False:
+    while True:
         key = ord(getch())
         if key == ENTER_KEY and currentState == menuStates.START:
-            #start()
-            pressedEnter = True
+            startGame()
+            break
 
         elif key == ENTER_KEY and currentState == menuStates.EXIT:
             exit()
-            pressedEnter = True
+            break
 
         elif key == ENTER_KEY and currentState == menuStates.RULES:
-            #rules()
-            pressedEnter = True
+            displayRules()
+            break
         else:
             states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
             if key == LEFT_KEY:
