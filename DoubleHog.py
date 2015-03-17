@@ -29,15 +29,17 @@ def displayRules():
     rules = Ascii.rules
     min = 1
     max = 17
+    changed = True
+
     getch = Getch._Getch()
     while True:
-        Ascii.clear()
-        print(rules[0])
-        for lineNumber in range(min, max):
-            print(rules[lineNumber])
-
-        print(Ascii.okButton)
-
+        if changed:
+            Ascii.clear()
+            print(rules[0])
+            for lineNumber in range(min, max):
+                print(rules[lineNumber])
+            print(Ascii.okButton)
+            changed = False
         key = ord(getch())
         if key == ENTER_KEY:
             init()
@@ -46,10 +48,12 @@ def displayRules():
             if max != len(rules):
                 min += 1
                 max += 1
+                changed = True
         elif key == UP_KEY:
             if min != 1:
                 min -= 1
                 max -= 1
+                changed = True
 
 
 def init():
