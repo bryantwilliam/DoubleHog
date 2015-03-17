@@ -1,0 +1,2 @@
+Do not run this file in the python IDLE. It needs to be run in the console interpreter.
+In Microsoft CMD or a Unix Shell. If you do run it in the IDLE then it will create a continuous loop of terminals.
