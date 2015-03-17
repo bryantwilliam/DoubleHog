@@ -45,7 +45,7 @@ menuExit = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\
 \n\n\n\n\n\n\n"""
 
 # 18 lines of rules are shown at a time.
-rules = ["\t\t\t\tRULES:",
+rules = ["\t\t\t\t  RULES:",
          " ",
          "Players:",
          " ",

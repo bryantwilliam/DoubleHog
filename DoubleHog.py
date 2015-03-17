@@ -44,12 +44,12 @@ def displayRules():
         if key == ENTER_KEY:
             init()
             break
-        elif key == DOWN_KEY:
+        elif key == DOWN_KEY or key == RIGHT_KEY:
             if max != len(rules):
                 min += 1
                 max += 1
                 changed = True
-        elif key == UP_KEY:
+        elif key == UP_KEY or key == RIGHT_KEY:
             if min != 1:
                 min -= 1
                 max -= 1
