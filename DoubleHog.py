@@ -32,9 +32,6 @@ def getNewState(key, currentState):
             return states[states.index(currentState) + 1]
     else:
         return currentState
-#This is a small text based gui with the ability to change option with arrow
-#keys which players can choose to start/exit the game
-
 
 def init():
     getch = Getch._Getch()
