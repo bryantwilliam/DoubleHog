@@ -1,21 +1,9 @@
-#-------------------------------------------------------------------------------
-# Name:        main.py
-# Purpose:     An RPG (Roll playing game) where you wake up in a room and have
-#              to figure out text based puzzles to escape.
-#              The whole game will be done in a terminal (Shell) and will be
-#              completely text and ascii code. This will be the main file.
-#
-# Author:      William Bryant
-#
-# Created:     15/12/2013
-# Copyright:   (c) William Bryant 2013
-#-------------------------------------------------------------------------------
+__author__ = 'william'
 
-import time
 import Ascii
 import Getch
-from enum import Enum
 import platform
+import Enums
 
 if platform.system() == "Windows":
     ENTER_KEY = 13
@@ -26,16 +14,10 @@ elif platform.system() == "Linux":
     LEFT_KEY = 68
     RIGHT_KEY = 67
 
-
-
-class menuState(Enum):
-    start = Ascii.menuStart
-    rules = Ascii.menuRules
-    exit = Ascii.menuExit
-
+menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
 def getNewState(key, currentState):
-    states = [menuState.start, menuState.rules, menuState.exit]
+    states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
     states.index(currentState)
     if key == LEFT_KEY:
         if states.index(currentState) == 0:
@@ -56,26 +38,26 @@ def getNewState(key, currentState):
 
 def init():
     getch = Getch._Getch()
-    currentState = menuState.start
+    currentState = menuStates.START
     print(Ascii.menuStart)
 
     pressedEnter = False
     while pressedEnter == False:
         key = ord(getch())
-        if key == ENTER_KEY and currentState == menuState.start:
+        if key == ENTER_KEY and currentState == menuStates.START:
             #start()
             pressedEnter = True
 
-        elif key == ENTER_KEY and currentState == menuState.exit:
+        elif key == ENTER_KEY and currentState == menuStates.EXIT:
             exit()
             pressedEnter = True
 
-        elif key == ENTER_KEY and currentState == menuState.rules:
+        elif key == ENTER_KEY and currentState == menuStates.RULES:
             #rules()
             pressedEnter = True
         else:
             currentState = getNewState(key, currentState)
-            print(currentState.value)
+            print(currentState)
 
 
 
