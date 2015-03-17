@@ -57,6 +57,7 @@ def init():
             pressedEnter = True
         else:
             currentState = getNewState(key, currentState)
+            Ascii.clear()
             print(currentState)
 
 
