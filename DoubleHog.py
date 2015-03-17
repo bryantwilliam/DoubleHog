@@ -16,23 +16,6 @@ elif platform.system() == "Linux":
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
-def getNewState(key, currentState):
-    states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
-    states.index(currentState)
-    if key == LEFT_KEY:
-        if states.index(currentState) == 0:
-            return states[2]
-        else:
-            return states[states.index(currentState) - 1]
-    elif key == RIGHT_KEY:
-        if states.index(currentState) == 2:
-            return states[0]
-
-        else:
-            return states[states.index(currentState) + 1]
-    else:
-        return currentState
-
 def init():
     getch = Getch._Getch()
     currentState = menuStates.START
@@ -54,10 +37,20 @@ def init():
             #rules()
             pressedEnter = True
         else:
-            currentState = getNewState(key, currentState)
+            states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
+            if key == LEFT_KEY:
+                if states.index(currentState) == 0:
+                    currentState =  states[2]
+                else:
+                    currentState =  states[states.index(currentState) - 1]
+            elif key == RIGHT_KEY:
+                if states.index(currentState) == 2:
+                    currentState =  states[0]
+
+                else:
+                    currentState =  states[states.index(currentState) + 1]
             Ascii.clear()
             print(currentState)
-
 
 
 #if the file is the main file then start the program

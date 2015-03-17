@@ -1,6 +1,13 @@
 __author__ = 'william'
 
-#Class to test whether this program is run on Windows or Unix.
+import time
+
+if __name__ == '__main__':
+    print("[ERROR]: Do not run this file. Run DoubleHog.py - this file should not be executed!")
+    time.sleep(4)
+    exit()
+
+
 class _Getch:
     """
     Gets a single character from standard input.  Does not echo to the screen.
@@ -13,7 +20,7 @@ class _Getch:
 
     def __call__(self): return self.impl()
 
-#The Unix way of using getch() - Getch still doesn't work, but working on it.
+
 class _GetchUnix:
     def __init__(self):
         import tty, sys
@@ -29,7 +36,7 @@ class _GetchUnix:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
-#The Windows way of using getch()
+
 class _GetchWindows:
     def __init__(self):
         import msvcrt
