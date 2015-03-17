@@ -15,10 +15,17 @@ import time
 import Ascii
 import Getch
 from enum import Enum
+import platform
 
-ENTER_KEY = b'\r'
-LEFT_KEY = b'K'
-RIGHT_KEY = b'M'
+if platform.system() == "Windows":
+    ENTER_KEY = 13
+    LEFT_KEY = 75
+    RIGHT_KEY = 77
+elif platform.system() == "Linux":
+    ENTER_KEY = 13
+    LEFT_KEY = 68
+    RIGHT_KEY = 67
+
 
 
 class menuState(Enum):
@@ -29,6 +36,7 @@ class menuState(Enum):
 
 def getNewState(key, currentState):
     states = [menuState.start, menuState.rules, menuState.exit]
+    states.index(currentState)
     if key == LEFT_KEY:
         if states.index(currentState) == 0:
             return states[2]
@@ -37,9 +45,11 @@ def getNewState(key, currentState):
     elif key == RIGHT_KEY:
         if states.index(currentState) == 2:
             return states[0]
+
         else:
             return states[states.index(currentState) + 1]
-
+    else:
+        return currentState
 #This is a small text based gui with the ability to change option with arrow
 #keys which players can choose to start/exit the game
 
@@ -51,9 +61,7 @@ def init():
 
     pressedEnter = False
     while pressedEnter == False:
-        getch()
-        key = getch()
-
+        key = ord(getch())
         if key == ENTER_KEY and currentState == menuState.start:
             #start()
             pressedEnter = True
@@ -66,7 +74,8 @@ def init():
             #rules()
             pressedEnter = True
         else:
-            print(menuState(getNewState(key, currentState)))
+            currentState = getNewState(key, currentState)
+            print(currentState.value)
 
 
 
