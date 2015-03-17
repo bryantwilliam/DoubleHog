@@ -9,10 +9,15 @@ if platform.system() == "Windows":
     ENTER_KEY = 13
     LEFT_KEY = 75
     RIGHT_KEY = 77
+    UP_KEY = 72
+    DOWN_KEY = 80
+
 elif platform.system() == "Linux":
     ENTER_KEY = 13
     LEFT_KEY = 68
     RIGHT_KEY = 67
+    UP_KEY = 65
+    DOWN_KEY = 66
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
@@ -21,15 +26,30 @@ def startGame():
     pass
 
 def displayRules():
-    Ascii.clear()
-    print(Ascii.rules)
-    print(Ascii.okButton)
+    rules = Ascii.rules
+    min = 1
+    max = 17
     getch = Getch._Getch()
     while True:
+        Ascii.clear()
+        print(rules[0])
+        for lineNumber in range(min, max):
+            print(rules[lineNumber])
+
+        print(Ascii.okButton)
+
         key = ord(getch())
         if key == ENTER_KEY:
             init()
             break
+        elif key == DOWN_KEY:
+            if max != len(rules):
+                min += 1
+                max += 1
+        elif key == UP_KEY:
+            if min != 1:
+                min -= 1
+                max -= 1
 
 
 def init():
