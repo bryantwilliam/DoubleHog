@@ -9,7 +9,7 @@ import sys
 import random
 
 if sys.version_info[0] == 2:
-    def input():
+    def input(text):
         return raw_input(text)
 
 if platform.system() == "Windows":
