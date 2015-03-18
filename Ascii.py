@@ -13,6 +13,7 @@ def clear():
     """
     Clears the console screen using the built in commands on a operating
     system (here linux and windows)
+    This is pretty much the only comment I'm going to make because I never really comment (which is bad)
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 

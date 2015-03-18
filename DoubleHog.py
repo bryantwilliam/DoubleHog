@@ -9,7 +9,7 @@ import sys
 import random
 
 if sys.version_info[0] == 2:
-    def input(text):
+    def input():
         return raw_input(text)
 
 if platform.system() == "Windows":
@@ -35,7 +35,7 @@ def startGame():
     while True:
         try:
             amountPlayers = int(input("\n How many players will you be playing with? (2-4 are the limits): "))
-            if amountPlayers not in [2,3,4]:
+            if amountPlayers not in [2, 3, 4]:
                 raise ValueError
         except ValueError:
             for i in range(3):
@@ -56,10 +56,9 @@ def startGame():
 
     time.sleep(1)
 
-    Ascii.clear()
     message = "\n\n\tGreat! so we have "
 
-    #Shuffled so the order at which they role dice is random.
+    # Shuffled so the order at which they role dice is random.
     random.shuffle(players)
     for player in players:
         if players.index(player) == len(players) - 1:

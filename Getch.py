@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
 class _Getch:
     """
-    Gets a single character from standard input.  Does not echo to the screen.
+    Gets a single character from standard input.
     """
     def __init__(self):
         try:
