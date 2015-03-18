@@ -10,6 +10,7 @@ import random
 
 if sys.version_info[0] == 2:
     def input(text):
+        # noinspection PyUnresolvedReferences
         return raw_input(text)
 
 if platform.system() == "Windows":
