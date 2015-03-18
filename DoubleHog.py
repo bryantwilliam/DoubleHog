@@ -4,6 +4,13 @@ import Ascii
 import Getch
 import platform
 import Enums
+import time
+import sys
+import random
+
+if sys.version_info[0] == 2:
+    def input(text):
+        return raw_input(text)
 
 if platform.system() == "Windows":
     ENTER_KEY = 13
@@ -23,7 +30,44 @@ menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii
 
 
 def startGame():
-    pass
+    Ascii.clear()
+    print("\n\n\t\t\tAwesome! Lets get started then...")
+    while True:
+        try:
+            amountPlayers = int(input("\n How many players will you be playing with? (2-4 are the limits): "))
+            if amountPlayers not in [2,3,4]:
+                raise ValueError
+        except ValueError:
+            for i in range(3):
+                Ascii.clear()
+                print(" Error! You did not enter a valid number! (2-4 are the limits)")
+                time.sleep(1)
+            Ascii.clear()
+        else:
+            break
+    players = []
+    players.append(input("\n\n\t Ok cool! We got " + str(amountPlayers) + " players. So what's your name? "))
+
+    for player in range(amountPlayers - 1):
+        if len(players) == 2:
+            players.append(input("\n\n\t Ok " + players[0] + " and your friend's name? " ))
+        else:
+            players.append(input("\n\n\t Great! And your other friend's name? " ))
+
+    time.sleep(1)
+
+    Ascii.clear()
+    message = "\n\n\tGreat! so we have "
+
+    #Shuffled so the order at which they role dice is random.
+    random.shuffle(players)
+    for player in players:
+        if players.index(player) == len(players) - 1:
+            message += "and finally " + player
+        else:
+            message += player + ", "
+    print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
+
     # TODO:
     # Create game.
 

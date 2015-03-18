@@ -84,3 +84,10 @@ okButtonRules = """
  Use the up and down arrow      |    >OK<    |
  keys to scroll up and down     |____________|
 """
+
+okButtonGeneral = """
+                                 ____________
+                                |            |
+                                |    >OK<    |
+                                |____________|
+"""
