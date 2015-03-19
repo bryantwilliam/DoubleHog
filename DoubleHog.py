@@ -112,8 +112,12 @@ def startGame():
 
     Animation.start()
 
+    getch = Getch._Getch()
+
     # TODO:
-    # Create game.
+    # add up down, enter button
+    # have a look at "Other friend" and "," error.
+    # Create game logic.
 
 def displayRules():
     rules = Ascii.rules
