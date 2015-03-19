@@ -31,21 +31,18 @@ elif platform.system() == "Linux":
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
 class DiceAnimation(threading.Thread):
-    def __init__(self, runTime=0, playerName="null", passLabel=Ascii.roleLabel_choose, roleLabel=Ascii.passLabel):
+    def __init__(self, playerName="null", passLabel=Ascii.roleLabel_choose, roleLabel=Ascii.passLabel):
         super(DiceAnimation, self).__init__()
-        self._stop = threading.Event()
-        self.runTime = runTime
-        self.roleLabel = Ascii.roleLabel_choose
-        self.passLabel = Ascii.passLabel
         self.playerName = playerName
         self.roleLabel = roleLabel
         self.passLabel = passLabel
+        self.continueLoop = True
 
     def stop(self):
-        self._stop.set()
+        self.continueLoop = False
 
     def isStopped(self):
-        return self._stop.isSet()
+        return not self.continueLoop
 
     def createAnimation(self):
         Ascii.clear()
@@ -56,16 +53,8 @@ class DiceAnimation(threading.Thread):
         time.sleep(1)
 
     def run(self):
-        if self.runTime == 0:
-            while True:
-                self.createAnimation()
-        elif self.runTime > 0:
-            for i in range(self.runTime):
-                self.createAnimation()
-            self.stop()
-        else:
-            self.stop()
-            raise Exception()
+        while self.continueLoop:
+            self.createAnimation()
 
     def getLabels(self):
         return [self.roleLabel, self.passLabel]
@@ -112,9 +101,9 @@ def startGame():
 
     Ascii.clear()
 
-    Animation = DiceAnimation(0, players[0], Ascii.passLabel, Ascii.roleLabel_choose)
+    Animation = DiceAnimation(players[0], Ascii.passLabel, Ascii.roleLabel_choose)
     Animation.start()
-    # Animation.stop()
+    Animation.stop()
 
 
     # TODO:
