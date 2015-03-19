@@ -7,7 +7,7 @@ import Enums
 import time
 import sys
 import random
-from threading import Thread
+import threading
 
 if sys.version_info[0] == 2:
     def input(text):
@@ -30,14 +30,22 @@ elif platform.system() == "Linux":
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
-class StartDiceAnimation(Thread):
-    def __init__(self, runTime=0, playerName="null"):
-        Thread.__init__(self)
+class DiceAnimation(threading.Thread):
+    def __init__(self, runTime=0, playerName="null", passLabel=Ascii.roleLabel_choose, roleLabel=Ascii.passLabel):
+        super(DiceAnimation, self).__init__()
+        self._stop = threading.Event()
         self.runTime = runTime
         self.roleLabel = Ascii.roleLabel_choose
         self.passLabel = Ascii.passLabel
         self.playerName = playerName
-        self.isRunning = False
+        self.roleLabel = roleLabel
+        self.passLabel = passLabel
+
+    def stop(self):
+        self._stop.set()
+
+    def isStopped(self):
+        return self._stop.isSet()
 
     def createAnimation(self):
         Ascii.clear()
@@ -46,28 +54,21 @@ class StartDiceAnimation(Thread):
         Ascii.clear()
         print(self.roleLabel + Ascii.getdiceAnimation2(self.playerName) + self.passLabel)
         time.sleep(1)
-    def stop(self):
-        self.isRunning = False
 
     def run(self):
-        self.isRunning = True
         if self.runTime == 0:
-            while self.isRunning:
+            while True:
                 self.createAnimation()
         elif self.runTime > 0:
-            for i in range(1, self.runTime):
+            for i in range(self.runTime):
                 self.createAnimation()
+            self.stop()
         else:
+            self.stop()
             raise Exception()
 
     def getLabels(self):
         return [self.roleLabel, self.passLabel]
-
-    def setAnimation(self, playerName, passLabel=Ascii.roleLabel_choose, roleLabel=Ascii.passLabel):
-        self.roleLabel = roleLabel
-        self.passLabel = passLabel
-        self.playerName = playerName
-
 
 def startGame():
     Ascii.clear()
@@ -111,20 +112,9 @@ def startGame():
 
     Ascii.clear()
 
-    Animation = StartDiceAnimation()
-    Animation.setAnimation(players[0])
-
+    Animation = DiceAnimation(0, players[0], Ascii.passLabel, Ascii.roleLabel_choose)
     Animation.start()
-
-    getch = Getch._Getch()
-    while True:
-        key = ord(getch())
-        if key == DOWN_KEY:
-            if Animation.getLabels()[1] == Ascii.passLabel_choose:
-                Animation.setAnimation(players[0], Ascii.passLabel, Ascii.roleLabel_choose)
-        if key == UP_KEY:
-            if Animation.getLabels()[0] == Ascii.roleLabel_choose:
-                Animation.setAnimation(players[0], Ascii.passLabel_choose, Ascii.roleLabel)
+    # Animation.stop()
 
 
     # TODO:
