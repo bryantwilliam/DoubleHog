@@ -50,7 +50,7 @@ def startGame():
     players.append(input("\n\n\t Ok cool! We got " + str(amountPlayers) + " players. So what's your name? "))
 
     for player in range(amountPlayers - 1):
-        if len(players) == 2:
+        if len(players) == 1:
             players.append(input("\n\n\t Ok " + players[0] + " and your friend's name? " ))
         else:
             players.append(input("\n\n\t Great! And your other friend's name? " ))
@@ -61,16 +61,31 @@ def startGame():
 
     # Shuffled so the order at which they role dice is random.
     random.shuffle(players)
-    for player in players:
-        if players.index(player) == len(players) - 1:
-            message += "and finally " + player
+    for index in range(len(players)):
+        if index == len(players) - 1:
+            if not len(players) == 2:
+                message += "and finally " + players[index]
+            else:
+                message += "and " + players[index]
         else:
-            message += player + ", "
+            message += players[index] + ", "
     print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
 
-    time.sleep(2)
+    time.sleep(3)
+
+    for i in range(3):
+        Ascii.clear()
+        print(Ascii.roleLabel + Ascii.getdiceAnimation1(players[0]) + Ascii.passLabel)
+
+        time.sleep(1)
+
+        Ascii.clear()
+        print(Ascii.roleLabel + Ascii.getdiceAnimation2(players[0]) + Ascii.passLabel)
+
+        time.sleep(1)
 
     Ascii.clear()
+    print(Ascii.roleLabel_choose + Ascii.getdiceAnimation1(players[0]) + Ascii.passLabel)
 
     # TODO:
     # add up down, enter button
