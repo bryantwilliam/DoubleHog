@@ -7,6 +7,7 @@ import Enums
 import time
 import sys
 import random
+from threading import Thread
 
 if sys.version_info[0] == 2:
     def input(text):
@@ -28,6 +29,40 @@ elif platform.system() == "Linux":
     DOWN_KEY = 66
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
+
+class StartDiceAnimation(Thread):
+    def __init__(self, runTime=0, playerName="null"):
+        Thread.__init__(self)
+        self.runTime = runTime
+        self.roleLabel = Ascii.roleLabel_choose
+        self.passLabel = Ascii.passLabel
+        self.playerName = playerName
+
+    def createAnimation(self):
+        Ascii.clear()
+        print(self.roleLabel + Ascii.getdiceAnimation1(self.playerName) + self.passLabel)
+        time.sleep(1)
+        Ascii.clear()
+        print(self.roleLabel + Ascii.getdiceAnimation2(self.playerName) + self.passLabel)
+        time.sleep(1)
+
+    def run(self):
+        if self.runTime == 0:
+            while True:
+                self.createAnimation()
+        elif self.runTime > 0:
+            for i in range(1, self.runTime):
+                self.createAnimation()
+        else:
+            raise Exception()
+
+    def getLabels(self):
+        return [self.roleLabel, self.passLabel]
+
+    def setAnimation(self, playerName, passLabel=Ascii.roleLabel_choose, roleLabel=Ascii.passLabel):
+        self.roleLabel = roleLabel
+        self.passLabel = passLabel
+        self.playerName = playerName
 
 
 def startGame():
@@ -68,7 +103,15 @@ def startGame():
             message += player + ", "
     print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
 
-    time.sleep(5)
+    time.sleep(2)
+
+    Ascii.clear()
+
+    Animation = StartDiceAnimation()
+    Animation.setAnimation(players[0])
+
+    Animation.start()
+
     # TODO:
     # Create game.
 

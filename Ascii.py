@@ -2,6 +2,7 @@ __author__ = 'william'
 
 import time
 import os
+import platform
 
 if __name__ == '__main__':
     print("[ERROR]: Do not run this file. Run DoubleHog.py - this file should not be executed!")
@@ -46,7 +47,11 @@ menuExit = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\
 \n\n\n\n\n\n\n"""
 
 def bold(msg):
-    return u'\033[1m%s\033[0m' % msg
+    # Unfortunately bold only works on Linux (My computer is running Linux so that's why I've made this cross-platform)
+    if platform.system() == "Linux":
+        return u'\033[1m%s\033[0m' % msg
+    else:
+        return msg
 
 # 16 lines of rules are shown at a time. Not including top line and ok button
 rules = [bold("\t\t\t\t  RULES:"),
@@ -96,39 +101,61 @@ okButtonGeneral = """
                                 |____________|
 """
 
-roleLabel = """
- _______  _______  _        _______
-(  ____ )(  ___  )( \      (  ____ \
-| (    )|| (   ) || (      | (    \/
-| (____)|| |   | || |      | (__
-|     __)| |   | || |      |  __)
-| (\ (   | |   | || |      | (
-| ) \ \__| (___) || (____/\| (____/\
-|/   \__/(_______)(_______/(_______/
+roleLabel_choose = """
+\t _______  _______  _        _______
+\t(  ____ )(  ___  )( \      (  ____ \\
+\t| (    )|| (   ) || (      | (    \/
+\t| (____)|| |   | || |      | (__
+\t|     __)| |   | || |      |  __)     <----- Role (Press Enter)
+\t| (\ (   | |   | || |      | (
+\t| ) \ \__| (___) || (____/\| (____/\\
+\t|/   \__/(_______)(_______/(_______/
 """
+roleLabel = """
+\t _______  _______  _        _______
+\t(  ____ )(  ___  )( \      (  ____ \\
+\t| (    )|| (   ) || (      | (    \/
+\t| (____)|| |   | || |      | (__
+\t|     __)| |   | || |      |  __)
+\t| (\ (   | |   | || |      | (
+\t| ) \ \__| (___) || (____/\| (____/\\
+\t|/   \__/(_______)(_______/(_______/
+"""
+
+passLabel_choose = """
+\t _______  _______  _______  _______
+\t(  ____ )(  ___  )(  ____ \(  ____ \\
+\t| (    )|| (   ) || (    \/| (    \/
+\t| (____)|| (___) || (_____ | (_____
+\t|  _____)|  ___  |(_____  )(_____  )   <----- Pass (Press Enter)
+\t| (      | (   ) |      ) |      ) |
+\t| )      | )   ( |/\____) |/\____) |
+\t|/       |/     \|\_______)\_______)"""
 
 passLabel = """
- _______  _______  _______  _______
-(  ____ )(  ___  )(  ____ \(  ____ \
-| (    )|| (   ) || (    \/| (    \/
-| (____)|| (___) || (_____ | (_____
-|  _____)|  ___  |(_____  )(_____  )
-| (      | (   ) |      ) |      ) |
-| )      | )   ( |/\____) |/\____) |
-|/       |/     \|\_______)\_______)
-"""
-dice1 = """
-     ____
-    /\' .\
-   /: \___\
-   \' / . /
-    \/___/
+\t _______  _______  _______  _______
+\t(  ____ )(  ___  )(  ____ \(  ____ \\
+\t| (    )|| (   ) || (    \/| (    \/
+\t| (____)|| (___) || (_____ | (_____
+\t|  _____)|  ___  |(_____  )(_____  )
+\t| (      | (   ) |      ) |      ) |
+\t| )      | )   ( |/\____) |/\____) |
+\t|/       |/     \|\_______)\_______)"""
 
-"""
-dice2 = """
-   _____
-  / .  /\
- /____/..\
- \'  '\  /
-  \'__'\/
-"""
+def getdiceAnimation1(playerName):
+    dice1 = \
+    "\n\t\t\t\t\t\t  ____" + \
+    "\n\t\t\t\t\t\t /\\' .\\" + \
+    "\n\t\t\tOR\t\t\t/: \___\\   " + playerName + "'s turn" + \
+    "\n\t\t\t\t\t\t\\' / . /" + \
+    "\n\t\t\t\t\t\t \/___/"
+    return dice1
+
+def getdiceAnimation2(playerName):
+    dice2 = \
+    "\n\t\t\t\t\t\t  _____" + \
+    "\n\t\t\t\t\t\t / .  /\\" + \
+    "\n\t\t\tOR\t\t\t/____/..\\  " + playerName + "'s turn" + \
+    "\n\t\t\t\t\t\t\\'  '\  /" + \
+    "\n\t\t\t\t\t\t \\'__'\/"
+    return dice2
