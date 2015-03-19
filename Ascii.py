@@ -45,25 +45,28 @@ menuExit = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\
             |_____________|  |_____________|  |_____________|
 \n\n\n\n\n\n\n"""
 
+def bold(msg):
+    return u'\033[1m%s\033[0m' % msg
+
 # 16 lines of rules are shown at a time. Not including top line and ok button
-rules = ["\t\t\t\t  RULES:",
+rules = [bold("\t\t\t\t  RULES:"),
          " ",
-         "Players:",
+         bold("Players:"),
          " ",
          "Usually played between 2 people.",
-         "Goal:",
+         bold("Goal:"),
          "The first person to reach 100 points is the winner.",
          " ",
-         "Gameplay:",
+         bold("Gameplay:"),
          " ",
          "On a turn, a player rolls the dice repeatedly until either:",
          "    * a single 1 is rolled",
          "    * the player chooses to hold (stop rolling)",
          "If either of the above occurs, it is the next player's turn.",
          " ",
-         "Scoring:",
+         bold("Scoring:"),
          " ",
-         "If a player rolls:",
+         bold( "If a player rolls:"),
          "    * a single 1 - their turn ends and the total value of both dice is deducted",
          "      from their score.",
          "    * (eg if they throw a 1 and a 3, 4 is deducted from their score; 1+5 will",
@@ -75,7 +78,7 @@ rules = ["\t\t\t\t  RULES:",
          "    * in all other cases - the player gets the total of both dice",
          "      (eg 3+4 counts as 7 points; 2+3 counts as 5 points)",
          " ",
-         "Game End:",
+         bold("Game End:"),
          " ",
          "When a player reaches a total of 100 or more points, that player is the winner,",
          "and the game ends."]
@@ -91,4 +94,41 @@ okButtonGeneral = """
                                 |            |
                                 |    >OK<    |
                                 |____________|
+"""
+
+roleLabel = """
+ _______  _______  _        _______
+(  ____ )(  ___  )( \      (  ____ \
+| (    )|| (   ) || (      | (    \/
+| (____)|| |   | || |      | (__
+|     __)| |   | || |      |  __)
+| (\ (   | |   | || |      | (
+| ) \ \__| (___) || (____/\| (____/\
+|/   \__/(_______)(_______/(_______/
+"""
+
+passLabel = """
+ _______  _______  _______  _______
+(  ____ )(  ___  )(  ____ \(  ____ \
+| (    )|| (   ) || (    \/| (    \/
+| (____)|| (___) || (_____ | (_____
+|  _____)|  ___  |(_____  )(_____  )
+| (      | (   ) |      ) |      ) |
+| )      | )   ( |/\____) |/\____) |
+|/       |/     \|\_______)\_______)
+"""
+dice1 = """
+     ____
+    /\' .\
+   /: \___\
+   \' / . /
+    \/___/
+
+"""
+dice2 = """
+   _____
+  / .  /\
+ /____/..\
+ \'  '\  /
+  \'__'\/
 """
