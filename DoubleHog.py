@@ -131,7 +131,6 @@ def startGame():
     # add up down, enter button
     # have a look at "Other friend" and "," error.
     # Create game logic.
-    while True:
 
 
 def displayRules():
