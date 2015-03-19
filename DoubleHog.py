@@ -30,35 +30,6 @@ elif platform.system() == "Linux":
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 
-class DiceAnimation(threading.Thread):
-    def __init__(self, playerName="null", passLabel=Ascii.roleLabel_choose, roleLabel=Ascii.passLabel):
-        super(DiceAnimation, self).__init__()
-        self.playerName = playerName
-        self.roleLabel = roleLabel
-        self.passLabel = passLabel
-        self.continueLoop = True
-
-    def stop(self):
-        self.continueLoop = False
-
-    def isStopped(self):
-        return not self.continueLoop
-
-    def createAnimation(self):
-        Ascii.clear()
-        print(self.roleLabel + Ascii.getdiceAnimation1(self.playerName) + self.passLabel)
-        time.sleep(1)
-        Ascii.clear()
-        print(self.roleLabel + Ascii.getdiceAnimation2(self.playerName) + self.passLabel)
-        time.sleep(1)
-
-    def run(self):
-        while self.continueLoop:
-            self.createAnimation()
-
-    def getLabels(self):
-        return [self.roleLabel, self.passLabel]
-
 def startGame():
     Ascii.clear()
     print("\n\n\t\t\tAwesome! Lets get started then...")
@@ -100,11 +71,6 @@ def startGame():
     time.sleep(2)
 
     Ascii.clear()
-
-    Animation = DiceAnimation(players[0], Ascii.passLabel, Ascii.roleLabel_choose)
-    Animation.start()
-    Animation.stop()
-
 
     # TODO:
     # add up down, enter button
