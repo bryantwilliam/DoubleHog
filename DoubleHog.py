@@ -68,6 +68,7 @@ def startGame():
             message += player + ", "
     print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
 
+    time.sleep(5)
     # TODO:
     # Create game.
 
