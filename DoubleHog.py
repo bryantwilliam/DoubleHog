@@ -74,7 +74,7 @@ def startGame():
 
     time.sleep(3)
 
-    for i in range(3):
+    for i in range(2):
         Ascii.clear()
 
         print(Ascii.roleLabel + Ascii.getdiceAnimation1(players[0]) + Ascii.passLabel)
