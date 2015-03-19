@@ -37,6 +37,7 @@ class StartDiceAnimation(Thread):
         self.roleLabel = Ascii.roleLabel_choose
         self.passLabel = Ascii.passLabel
         self.playerName = playerName
+        self.isRunning = False
 
     def createAnimation(self):
         Ascii.clear()
@@ -45,10 +46,13 @@ class StartDiceAnimation(Thread):
         Ascii.clear()
         print(self.roleLabel + Ascii.getdiceAnimation2(self.playerName) + self.passLabel)
         time.sleep(1)
+    def stop(self):
+        self.isRunning = False
 
     def run(self):
+        self.isRunning = True
         if self.runTime == 0:
-            while True:
+            while self.isRunning:
                 self.createAnimation()
         elif self.runTime > 0:
             for i in range(1, self.runTime):
@@ -113,11 +117,22 @@ def startGame():
     Animation.start()
 
     getch = Getch._Getch()
+    while True:
+        key = ord(getch())
+        if key == DOWN_KEY:
+            if Animation.getLabels()[1] == Ascii.passLabel_choose:
+                Animation.setAnimation(players[0], Ascii.passLabel, Ascii.roleLabel_choose)
+        if key == UP_KEY:
+            if Animation.getLabels()[0] == Ascii.roleLabel_choose:
+                Animation.setAnimation(players[0], Ascii.passLabel_choose, Ascii.roleLabel)
+
 
     # TODO:
     # add up down, enter button
     # have a look at "Other friend" and "," error.
     # Create game logic.
+    while True:
+
 
 def displayRules():
     rules = Ascii.rules
