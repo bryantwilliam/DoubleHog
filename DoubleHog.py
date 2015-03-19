@@ -29,6 +29,7 @@ elif platform.system() == "Linux":
     DOWN_KEY = 66
 
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
+turnStates = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose, PASS=Ascii.passLabel)
 
 def startGame():
     Ascii.clear()
@@ -75,6 +76,7 @@ def startGame():
 
     for i in range(3):
         Ascii.clear()
+
         print(Ascii.roleLabel + Ascii.getdiceAnimation1(players[0]) + Ascii.passLabel)
 
         time.sleep(1)
@@ -84,9 +86,33 @@ def startGame():
 
         time.sleep(1)
 
-    Ascii.clear()
-    print(Ascii.roleLabel_choose + Ascii.getdiceAnimation1(players[0]) + Ascii.passLabel)
 
+    roleState = turnStates.ROLE_CHOOSE
+    passState = turnStates.PASS
+
+    Ascii.clear()
+    print(roleState + Ascii.getdiceAnimation1(players[0]) + passState)
+
+    getch = Getch._Getch()
+    while True:
+        Ascii.clear()
+        print(roleState + Ascii.getdiceAnimation1(players[0]) + passState)
+        key = ord(getch())
+        if key == DOWN_KEY:
+            if roleState == turnStates.ROLE_CHOOSE:
+                roleState = turnStates.ROLE
+                passState = turnStates.PASS_CHOOSE
+        elif key == UP_KEY:
+            if passState == turnStates.PASS_CHOOSE:
+                roleState = turnStates.ROLE_CHOOSE
+                passState = turnStates.PASS
+        elif key == ENTER_KEY:
+            if passState == turnStates.PASS_CHOOSE:
+                # pass()
+                break
+            elif roleState == turnStates.ROLE_CHOOSE:
+                # role()
+                break
     # TODO:
     # add up down, enter button
     # have a look at "Other friend" and "," error.
