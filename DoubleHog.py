@@ -85,50 +85,47 @@ def startGame():
     print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
 
     time.sleep(3)
+    for player in players:
+        for i in range(2):
+            Ascii.clear()
 
-    for i in range(2):
+            print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
+
+            time.sleep(1)
+
+            Ascii.clear()
+            print(Ascii.roleLabel + Ascii.getdiceAnimation2(player) + Ascii.passLabel)
+            time.sleep(1)
+
+        roleState = turnStates.ROLE_CHOOSE
+        passState = turnStates.PASS
+
         Ascii.clear()
+        print(roleState + Ascii.getdiceAnimation1(player) + passState)
 
-        print(Ascii.roleLabel + Ascii.getdiceAnimation1(players[0]) + Ascii.passLabel)
-
-        time.sleep(1)
-
-        Ascii.clear()
-        print(Ascii.roleLabel + Ascii.getdiceAnimation2(players[0]) + Ascii.passLabel)
-
-        time.sleep(1)
-
-    roleState = turnStates.ROLE_CHOOSE
-    passState = turnStates.PASS
-
-    Ascii.clear()
-    print(roleState + Ascii.getdiceAnimation1(players[0]) + passState)
-
-    passing = False
-    getch = Getch._Getch()
-    while True:
-        Ascii.clear()
-        print(roleState + Ascii.getdiceAnimation1(players[0]) + passState)
-        key = ord(getch())
-        if key == DOWN_KEY:
-            if roleState == turnStates.ROLE_CHOOSE:
-                roleState = turnStates.ROLE
-                passState = turnStates.PASS_CHOOSE
-        elif key == UP_KEY:
-            if passState == turnStates.PASS_CHOOSE:
-                roleState = turnStates.ROLE_CHOOSE
-                passState = turnStates.PASS
-        elif key == ENTER_KEY:
-            if passState == turnStates.PASS_CHOOSE:
-                passing = True
-                break
-            elif roleState == turnStates.ROLE_CHOOSE:
-                roleRound()
-                break
-                # TODO:
-                # add up down, enter button
-                # have a look at "Other friend" and "," error.
-                # Create game logic.
+        getch = Getch._Getch()
+        while True:
+            Ascii.clear()
+            print(roleState + Ascii.getdiceAnimation1(player) + passState)
+            key = ord(getch())
+            if key == DOWN_KEY:
+                if roleState == turnStates.ROLE_CHOOSE:
+                    roleState = turnStates.ROLE
+                    passState = turnStates.PASS_CHOOSE
+            elif key == UP_KEY:
+                if passState == turnStates.PASS_CHOOSE:
+                    roleState = turnStates.ROLE_CHOOSE
+                    passState = turnStates.PASS
+            elif key == ENTER_KEY:
+                if passState == turnStates.PASS_CHOOSE:
+                    break
+                elif roleState == turnStates.ROLE_CHOOSE:
+                    roleRound()
+                    break
+                    # TODO:
+                    # add up down, enter button
+                    # have a look at "Other friend" and "," error.
+                    # Create game logic.
 
 
 def roleRound():
