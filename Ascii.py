@@ -46,6 +46,7 @@ menuExit = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\
             |_____________|  |_____________|  |_____________|
 \n\n\n\n\n\n\n"""
 
+
 def bold(msg):
     # Unfortunately bold only works on Linux (My computer is running Linux so that's why I've made this cross-platform)
     if platform.system() == "Linux":
@@ -71,7 +72,7 @@ rules = [bold("\t\t\t\t  RULES:"),
          " ",
          bold("Scoring:"),
          " ",
-         bold( "If a player rolls:"),
+         bold("If a player rolls:"),
          "    * a single 1 - their turn ends and the total value of both dice is deducted",
          "      from their score.",
          "    * (eg if they throw a 1 and a 3, 4 is deducted from their score; 1+5 will",
@@ -142,20 +143,52 @@ passLabel = """
 \t| )      | )   ( |/\____) |/\____) |
 \t|/       |/     \|\_______)\_______)"""
 
+
 def getdiceAnimation1(playerName):
     dice1 = \
-    "\n\t\t\t\t\t\t  ____" + \
-    "\n\t\t\t\t\t\t /\\' .\\" + \
-    "\n\t\t\tOR\t\t\t/: \___\\   " + playerName + "'s turn" + \
-    "\n\t\t\t\t\t\t\\' / . /" + \
-    "\n\t\t\t\t\t\t \/___/"
+        "\n\t\t\t\t\t\t  ____" + \
+        "\n\t\t\t\t\t\t /\\' .\\" + \
+        "\n\t\t\tOR\t\t\t/: \___\\   " + playerName + "'s turn" + \
+        "\n\t\t\t\t\t\t\\' / . /" + \
+        "\n\t\t\t\t\t\t \/___/"
     return dice1
+
 
 def getdiceAnimation2(playerName):
     dice2 = \
-    "\n\t\t\t\t\t\t  _____" + \
-    "\n\t\t\t\t\t\t / .  /\\" + \
-    "\n\t\t\tOR\t\t\t/____/..\\  " + playerName + "'s turn" + \
-    "\n\t\t\t\t\t\t\\'  '\  /" + \
-    "\n\t\t\t\t\t\t \\'__'\/"
+        "\n\t\t\t\t\t\t  _____" + \
+        "\n\t\t\t\t\t\t / .  /\\" + \
+        "\n\t\t\tOR\t\t\t/____/..\\  " + playerName + "'s turn" + \
+        "\n\t\t\t\t\t\t\\'  '\  /" + \
+        "\n\t\t\t\t\t\t \\'__'\/"
     return dice2
+
+rollingDice1 = """\n
+                                   ______
+                                  /     /\\
+                                 /  '  /  \\
+                                /_____/. . \\
+                                \ . . \    /
+                                 \ . . \  /
+                                  \_____\/
+"""
+
+rollingDice2 = """\n
+                                 _______.
+                                | .   . |\\
+                                |   .   |.\\
+                                | .   . |.'|
+                                |_______|.'|
+                                 \ ' .   \\'|
+                                  \____'__\|
+"""
+
+#0-6
+#7-13
+#14-20
+diceRoles = {1: "[     ][  o  ][     ]",
+             2: "[     ][ o o ][     ]",
+             3: "[  o  ][ o o ][     ]",
+             4: "[ o o ][     ][ o o ]",
+             5: "[ o o ][  o  ][ o o ]",
+             6: "[ o o ][ o o ][ o o ]"}
