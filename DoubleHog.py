@@ -104,6 +104,7 @@ def startGame():
     Ascii.clear()
     print(roleState + Ascii.getdiceAnimation1(players[0]) + passState)
 
+    passing = False
     getch = Getch._Getch()
     while True:
         Ascii.clear()
@@ -119,7 +120,7 @@ def startGame():
                 passState = turnStates.PASS
         elif key == ENTER_KEY:
             if passState == turnStates.PASS_CHOOSE:
-                passRound()
+                passing = True
                 break
             elif roleState == turnStates.ROLE_CHOOSE:
                 roleRound()
@@ -128,10 +129,6 @@ def startGame():
                 # add up down, enter button
                 # have a look at "Other friend" and "," error.
                 # Create game logic.
-
-
-def passRound():
-    Ascii.clear()
 
 
 def roleRound():
