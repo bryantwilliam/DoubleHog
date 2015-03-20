@@ -18,6 +18,14 @@ def clear():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def capStart(word):
+    word = word.lower()
+    letters = []
+    for letter in word:
+        letters.append(letter)
+    letters[0] = letters[0].upper()
+    word = "".join(letters)
+    return word
 
 menuStart = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\n
  \tDouble Hog is a fun dice game played using two six-sided dice.
@@ -192,3 +200,12 @@ diceRoles = {1: "[     ][  o  ][     ]",
              4: "[ o o ][     ][ o o ]",
              5: "[ o o ][  o  ][ o o ]",
              6: "[ o o ][ o o ][ o o ]"}
+
+score = """
+                         _____
+                        /  ___|
+                        \ `--.  ___ ___  _ __ ___
+                         `--. \/ __/ _ \| '__/ _ \\
+                        /\__/ / (_| (_) | | |  __/
+                        \____/ \___\___/|_|  \___|
+"""

@@ -1,12 +1,27 @@
 __author__ = 'william'
 
 import time
+import platform
 
 if __name__ == '__main__':
     print("[ERROR]: Do not run this file. Run DoubleHog.py - this file should not be executed!")
     time.sleep(4)
     exit()
 
+# Found these values by trial and error.... ;_;
+if platform.system() == "Windows":
+    ENTER_KEY = 13
+    LEFT_KEY = 75
+    RIGHT_KEY = 77
+    UP_KEY = 72
+    DOWN_KEY = 80
+
+elif platform.system() == "Linux":
+    ENTER_KEY = 13
+    LEFT_KEY = 68
+    RIGHT_KEY = 67
+    UP_KEY = 65
+    DOWN_KEY = 66
 
 class _Getch:
     """

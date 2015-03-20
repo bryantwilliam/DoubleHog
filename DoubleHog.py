@@ -1,17 +1,14 @@
 __author__ = 'william'
 
-import platform
-
 import time
 import sys
 import random
 import threading
-# Was going to use threads for animation but it seems like it won't work since getch() creates a thread
-# that continually creates blank lines then delete them and that messes up text output in another thread.
-# I'll keep this import here just incase I do something with it later and also to remind myself
+# Was going to use multi-threading for animation but it seems like it won't work since getch() creates a thread that
+# continually creates blank lines then delete them and that messes up text output in another thread.
+# I'll keep this import here just in case I do something with it later and also to remind myself
 
 import Ascii
-
 import Getch
 import Enums
 
@@ -21,24 +18,9 @@ if sys.version_info[0] == 2:
         # noinspection PyUnresolvedReferences
         return raw_input(text)
 
-if platform.system() == "Windows":
-    ENTER_KEY = 13
-    LEFT_KEY = 75
-    RIGHT_KEY = 77
-    UP_KEY = 72
-    DOWN_KEY = 80
-
-elif platform.system() == "Linux":
-    ENTER_KEY = 13
-    LEFT_KEY = 68
-    RIGHT_KEY = 67
-    UP_KEY = 65
-    DOWN_KEY = 66
-
 menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 turnStates = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose,
                         PASS=Ascii.passLabel)
-
 
 def startGame():
     Ascii.clear()
@@ -57,13 +39,20 @@ def startGame():
         else:
             break
     players = []
-    players.append(input("\n\n\t Ok cool! We got " + str(amountPlayers) + " players. So what's your name? "))
+    scores = []
+    name = input("\n\n\t Ok cool! We got " + str(amountPlayers) + " players. So what's your name? ")
+    players.append(Ascii.capStart(name))
+    scores.append(0)
 
     for player in range(amountPlayers - 1):
         if len(players) == 1:
-            players.append(input("\n\n\t Ok " + players[0] + " and your friend's name? "))
+            name = input("\n\n\t Ok " + players[0] + " and your friend's name? ")
+            players.append(Ascii.capStart(name))
+            scores.append(0)
         else:
-            players.append(input("\n\n\t Great! And your other friend's name? "))
+            name = input("\n\n\t Great! And your other friend's name? ")
+            players.append(Ascii.capStart(name))
+            scores.append(0)
 
     time.sleep(1)
 
@@ -85,6 +74,7 @@ def startGame():
     print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
 
     time.sleep(3)
+    index = 0
     for player in players:
         for i in range(2):
             Ascii.clear()
@@ -108,27 +98,59 @@ def startGame():
             Ascii.clear()
             print(roleState + Ascii.getdiceAnimation1(player) + passState)
             key = ord(getch())
-            if key == DOWN_KEY:
+            if key == Getch.DOWN_KEY:
                 if roleState == turnStates.ROLE_CHOOSE:
                     roleState = turnStates.ROLE
                     passState = turnStates.PASS_CHOOSE
-            elif key == UP_KEY:
+            elif key == Getch.UP_KEY:
                 if passState == turnStates.PASS_CHOOSE:
                     roleState = turnStates.ROLE_CHOOSE
                     passState = turnStates.PASS
-            elif key == ENTER_KEY:
+            elif key == Getch.ENTER_KEY:
+                playerScore = scores[players.index(player)]
                 if passState == turnStates.PASS_CHOOSE:
+                    Ascii.clear()
+                    print("\t\t\tYou chose to pass...")
+                    time.sleep(3)
                     break
                 elif roleState == turnStates.ROLE_CHOOSE:
-                    roleRound()
+                    scores[index] = role(playerScore)
+
+                    time.sleep(3)
+                    Ascii.clear()
+                    print(Ascii.score)
+
+                    message = "\n" + (4 - len(players)) * "\t"
+                    for p in range(0, len(players)):
+                        message += "\t" + players[p]
+                        if p != len(players) - 1:
+                            message += "\t | "
+                    print(message)
+
+                    message = (4 - len(scores)) * "\t"
+                    for s in range(0, len(scores)):
+                        message += "\t" + str(scores[s])
+                        if s != len(scores) - 1:
+                            message += "\t | "
+                    print(message)
+                    time.sleep(7)
                     break
-                    # TODO:
-                    # add up down, enter button
-                    # have a look at "Other friend" and "," error.
-                    # Create game logic.
+        cont = True
+        for score in scores:
+            if score >= 100:
+                # This means the player has won
+                cont = False
+        if cont:
+            continue
+        else:
+            pass
+            # TODO:
+            # make player win
+
+        index += 1
 
 
-def roleRound():
+def role(score):
     Ascii.clear()
     dice1 = random.randrange(1, 6)
     dice2 = random.randrange(1, 6)
@@ -157,13 +179,27 @@ def roleRound():
     print(youRolledMsg)
 
     time.sleep(3)
+
     if dice1 == 1 or dice2 == 1:
         if dice1 == dice2:
-            # Double 1s
-            pass
-        if dice1 != dice2:
+            # Double 1
+            score += 25
+            print("\t\t" + str(score) + " points will be added to your score...")
+        else:
             # Single 1
-            pass
+            score = score - (dice1 + dice2)
+            print("\t\t" + str(dice1 + dice2) + " points will be deducted from your score...")
+
+    elif dice1 == dice2:
+        # Regular double.
+        score += 2 * (dice1 + dice2)
+        print("\t\t" + str(2 * (dice1 + dice2)) + " points will added to your score...")
+    else:
+        # All other cases.
+        score += dice1 + dice2
+        print("\t\t" + str(dice1 + dice2) + " points will be added to your score...")
+    print("\t\tYou now have " + str(score) + " points")
+    return score
 
 
 def displayRules():
@@ -182,15 +218,15 @@ def displayRules():
             print(Ascii.okButtonRules)
             changed = False
         key = ord(getch())
-        if key == ENTER_KEY:
+        if key == Getch.ENTER_KEY:
             init()
             break
-        elif key == DOWN_KEY or key == RIGHT_KEY:
+        elif key == Getch.DOWN_KEY or key == Getch.RIGHT_KEY:
             if max != len(rules):
                 min += 1
                 max += 1
                 changed = True
-        elif key == UP_KEY or key == LEFT_KEY:
+        elif key == Getch.UP_KEY or key == Getch.LEFT_KEY:
             if min != 1:
                 min -= 1
                 max -= 1
@@ -205,25 +241,25 @@ def init():
 
     while True:
         key = ord(getch())
-        if key == ENTER_KEY and currentState == menuStates.START:
+        if key == Getch.ENTER_KEY and currentState == menuStates.START:
             startGame()
             break
 
-        elif key == ENTER_KEY and currentState == menuStates.EXIT:
+        elif key == Getch.ENTER_KEY and currentState == menuStates.EXIT:
             exit()
             break
 
-        elif key == ENTER_KEY and currentState == menuStates.RULES:
+        elif key == Getch.ENTER_KEY and currentState == menuStates.RULES:
             displayRules()
             break
         else:
             states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
-            if key == LEFT_KEY:
+            if key == Getch.LEFT_KEY:
                 if states.index(currentState) == 0:
                     currentState = states[2]
                 else:
                     currentState = states[states.index(currentState) - 1]
-            elif key == RIGHT_KEY:
+            elif key == Getch.RIGHT_KEY:
                 if states.index(currentState) == 2:
                     currentState = states[0]
 
@@ -233,6 +269,6 @@ def init():
             print(currentState)
 
 
-# if the file is the main file then start the program
+# If this is run directly, start the program.
 if __name__ == '__main__':
     init()
