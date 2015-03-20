@@ -153,8 +153,10 @@ def roleRound():
         youRolledMsg += "2 " + str(dice1) + "'s"
     else:
         youRolledMsg += "a " + str(dice1) + " and a " + str(dice2)
+
     print(youRolledMsg)
 
+    time.sleep(3)
     if dice1 == 1 or dice2 == 1:
         if dice1 == dice2:
             # Double 1s
@@ -162,8 +164,6 @@ def roleRound():
         if dice1 != dice2:
             # Single 1
             pass
-
-    print("\n\n\t\t\tYou rolled a " + str(dice1) + " and a " + str(dice2))
 
 
 def displayRules():
