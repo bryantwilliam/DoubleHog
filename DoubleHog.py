@@ -145,7 +145,7 @@ def startGame():
         else:
             pass
             # TODO:
-            # make player win
+            # Make player win
 
         index += 1
 
