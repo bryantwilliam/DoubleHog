@@ -16,6 +16,25 @@ menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii
 turnStates = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose,
                         PASS=Ascii.passLabel)
 
+def displayScore(players, scores):
+    time.sleep(3)
+    Ascii.clear()
+    print(Ascii.score)
+
+    message = "\n" + (4 - len(players)) * "\t"
+    for p in range(0, len(players)):
+        message += "\t" + players[p]
+        if p != len(players) - 1:
+            message += "\t | "
+    print(message)
+
+    message = (4 - len(scores)) * "\t"
+    for s in range(0, len(scores)):
+        message += "\t" + str(scores[s])
+        if s != len(scores) - 1:
+            message += "\t | "
+    print(message)
+    time.sleep(7)
 
 def startGame():
     try:
@@ -75,7 +94,7 @@ def startGame():
             cont = True
             index = 0
             for player in players:
-                for i in range(2):
+                for i in range(0, 1):
                     Ascii.clear()
 
                     print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
@@ -111,30 +130,14 @@ def startGame():
                             Ascii.clear()
                             print("\n\n\n\n\t\t\t\t  You chose to pass...")
                             print(Ascii.arrow)
-                            time.sleep(3)
+                            time.sleep(4)
+                            displayScore(players, scores)
                             break
                         elif roleState == turnStates.ROLE_CHOOSE:
                             scores[index] = role(playerScore)
-
-                            time.sleep(3)
-                            Ascii.clear()
-                            print(Ascii.score)
-
-                            message = "\n" + (4 - len(players)) * "\t"
-                            for p in range(0, len(players)):
-                                message += "\t" + players[p]
-                                if p != len(players) - 1:
-                                    message += "\t | "
-                            print(message)
-
-                            message = (4 - len(scores)) * "\t"
-                            for s in range(0, len(scores)):
-                                message += "\t" + str(scores[s])
-                                if s != len(scores) - 1:
-                                    message += "\t | "
-                            print(message)
-                            time.sleep(7)
+                            displayScore(players, scores)
                             break
+
                 for score in scores:
                     if score >= 100:
                         # This means the player has won
