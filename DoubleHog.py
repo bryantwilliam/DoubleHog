@@ -209,7 +209,7 @@ def takeTurn(player, players, scores, index):
                 Ascii.clear()
                 print("\n\n\n\n\t\t\t\t  You chose to pass...")
                 print(Ascii.arrow)
-                time.sleep(4)
+                time.sleep(2)
                 displayScore(players, scores)
             elif roleState == TURN_STATES.ROLE_CHOOSE:
                 rl = role(playerScore)
