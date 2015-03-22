@@ -3,16 +3,10 @@ __author__ = 'william'
 import time
 import sys
 import random
-import threading
-# Was going to use multi-threading for animation but it seems like it won't work since getch() creates a thread that
-# continually creates blank lines then delete them and that messes up text output in another thread.
-# I'll keep this import here just in case I do something with it later and also to remind myself
 
-import Ascii
-import Getch
-import Enums
+from Utils import Enums, Getch, Ascii
 
-
+# In case run with python 2 instead of 3....
 if sys.version_info[0] == 2:
     def input(text):
         # noinspection PyUnresolvedReferences
@@ -22,139 +16,159 @@ menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii
 turnStates = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose,
                         PASS=Ascii.passLabel)
 
+
 def startGame():
-    Ascii.clear()
-    print("\n\n\t\t\tAwesome! Lets get started then...")
-    while True:
-        try:
-            amountPlayers = int(input("\n How many players will you be playing with? (2-4 are the limits): "))
-            if amountPlayers not in [2, 3, 4]:
-                raise ValueError
-        except ValueError:
-            for i in range(3):
-                Ascii.clear()
-                print(" Error! You did not enter a valid number! (2-4 are the limits)")
-                time.sleep(1)
-            Ascii.clear()
-        else:
-            break
-    players = []
-    scores = []
-    name = input("\n\n\t Ok cool! We got " + str(amountPlayers) + " players. So what's your name? ")
-    players.append(Ascii.capStart(name))
-    scores.append(0)
-
-    for player in range(amountPlayers - 1):
-        if len(players) == 1:
-            name = input("\n\n\t Ok " + players[0] + " and your friend's name? ")
-            players.append(Ascii.capStart(name))
-            scores.append(0)
-        else:
-            name = input("\n\n\t Great! And your other friend's name? ")
-            players.append(Ascii.capStart(name))
-            scores.append(0)
-
-    time.sleep(1)
-
-    message = "\n\n\tGreat! so we have "
-
-    # Shuffled so the order at which they role dice is random.
-    random.shuffle(players)
-    for index in range(len(players)):
-        if index == len(players) - 1:
-            if not len(players) == 2:
-                message += "and finally " + players[index]
-            else:
-                message += "and " + players[index]
-        else:
-            if not (len(players) == 2 or index == len(players) - 2):
-                message += players[index] + ", "
-            else:
-                message += players[index] + " "
-    print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
-
-    time.sleep(3)
-    index = 0
-    for player in players:
-        for i in range(2):
-            Ascii.clear()
-
-            print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
-
-            time.sleep(1)
-
-            Ascii.clear()
-            print(Ascii.roleLabel + Ascii.getdiceAnimation2(player) + Ascii.passLabel)
-            time.sleep(1)
-
-        roleState = turnStates.ROLE_CHOOSE
-        passState = turnStates.PASS
-
+    try:
         Ascii.clear()
-        print(roleState + Ascii.getdiceAnimation1(player) + passState)
-
-        getch = Getch._Getch()
+        print("\n\n\t\t\tAwesome! Lets get started then...")
         while True:
-            Ascii.clear()
-            print(roleState + Ascii.getdiceAnimation1(player) + passState)
-            key = ord(getch())
-            if key == Getch.DOWN_KEY:
-                if roleState == turnStates.ROLE_CHOOSE:
-                    roleState = turnStates.ROLE
-                    passState = turnStates.PASS_CHOOSE
-            elif key == Getch.UP_KEY:
-                if passState == turnStates.PASS_CHOOSE:
-                    roleState = turnStates.ROLE_CHOOSE
-                    passState = turnStates.PASS
-            elif key == Getch.ENTER_KEY:
-                playerScore = scores[players.index(player)]
-                if passState == turnStates.PASS_CHOOSE:
+            try:
+                amountPlayers = int(input("\n How many players will you be playing with? (2-4 are the limits): "))
+                if amountPlayers not in [2, 3, 4]:
+                    raise ValueError
+            except ValueError:
+                for i in range(3):
                     Ascii.clear()
-                    print("\t\t\tYou chose to pass...")
-                    time.sleep(3)
-                    break
-                elif roleState == turnStates.ROLE_CHOOSE:
-                    scores[index] = role(playerScore)
+                    print(" Error! You did not enter a valid number! (2-4 are the limits)")
+                    time.sleep(1)
+                Ascii.clear()
+            else:
+                break
+        players = []
+        scores = []
+        name = input("\n\n\t Ok cool! We got " + str(amountPlayers) + " players. So what's your name? ")
+        players.append(Ascii.capStart(name))
+        scores.append(0)
 
-                    time.sleep(3)
+        for player in range(amountPlayers - 1):
+            if len(players) == 1:
+                name = input("\n\n\t Ok " + players[0] + " and your friend's name? ")
+                players.append(Ascii.capStart(name))
+                scores.append(0)
+            else:
+                name = input("\n\n\t Great! And your other friend's name? ")
+                players.append(Ascii.capStart(name))
+                scores.append(0)
+
+        time.sleep(1)
+
+        message = "\n\n\tGreat! so we have "
+
+        # Shuffled so the order at which they role dice is random.
+        random.shuffle(players)
+        for index in range(len(players)):
+            if index == len(players) - 1:
+                if not len(players) == 2:
+                    message += "and finally " + players[index]
+                else:
+                    message += "and " + players[index]
+            else:
+                if not (len(players) == 2 or index == len(players) - 2):
+                    message += players[index] + ", "
+                else:
+                    message += players[index] + " "
+        print(message + "\n\t(Please forgive me if I mis-pronounced your name. I'm only a robot!)")
+
+        time.sleep(3)
+
+        while True:
+            cont = True
+            index = 0
+            for player in players:
+                for i in range(2):
                     Ascii.clear()
-                    print(Ascii.score)
 
-                    message = "\n" + (4 - len(players)) * "\t"
-                    for p in range(0, len(players)):
-                        message += "\t" + players[p]
-                        if p != len(players) - 1:
-                            message += "\t | "
-                    print(message)
+                    print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
 
-                    message = (4 - len(scores)) * "\t"
-                    for s in range(0, len(scores)):
-                        message += "\t" + str(scores[s])
-                        if s != len(scores) - 1:
-                            message += "\t | "
-                    print(message)
-                    time.sleep(7)
-                    break
-        cont = True
-        for score in scores:
-            if score >= 100:
-                # This means the player has won
-                cont = False
-        if cont:
-            continue
-        else:
-            pass
-            # TODO:
-            # Make player win
+                    time.sleep(1)
 
-        index += 1
+                    Ascii.clear()
+                    print(Ascii.roleLabel + Ascii.getdiceAnimation2(player) + Ascii.passLabel)
+                    time.sleep(1)
+
+                roleState = turnStates.ROLE_CHOOSE
+                passState = turnStates.PASS
+
+                Ascii.clear()
+                print(roleState + Ascii.getdiceAnimation1(player) + passState)
+
+                getch = Getch._Getch()
+                while True:
+                    Ascii.clear()
+                    print(roleState + Ascii.getdiceAnimation1(player) + passState)
+                    key = ord(getch())
+                    if key == Getch.DOWN_KEY:
+                        if roleState == turnStates.ROLE_CHOOSE:
+                            roleState = turnStates.ROLE
+                            passState = turnStates.PASS_CHOOSE
+                    elif key == Getch.UP_KEY:
+                        if passState == turnStates.PASS_CHOOSE:
+                            roleState = turnStates.ROLE_CHOOSE
+                            passState = turnStates.PASS
+                    elif key == Getch.ENTER_KEY:
+                        playerScore = scores[players.index(player)]
+                        if passState == turnStates.PASS_CHOOSE:
+                            Ascii.clear()
+                            print("\n\n\n\n\t\t\t\t  You chose to pass...")
+                            print(Ascii.arrow)
+                            time.sleep(3)
+                            break
+                        elif roleState == turnStates.ROLE_CHOOSE:
+                            scores[index] = role(playerScore)
+
+                            time.sleep(3)
+                            Ascii.clear()
+                            print(Ascii.score)
+
+                            message = "\n" + (4 - len(players)) * "\t"
+                            for p in range(0, len(players)):
+                                message += "\t" + players[p]
+                                if p != len(players) - 1:
+                                    message += "\t | "
+                            print(message)
+
+                            message = (4 - len(scores)) * "\t"
+                            for s in range(0, len(scores)):
+                                message += "\t" + str(scores[s])
+                                if s != len(scores) - 1:
+                                    message += "\t | "
+                            print(message)
+                            time.sleep(7)
+                            break
+                for score in scores:
+                    if score >= 100:
+                        # This means the player has won
+                        cont = False
+                        break
+                index += 1
+            if cont:
+                continue
+            else:
+                # TODO:
+                # Make player win
+                for index in range(0, len(players)):
+                    if scores[index] >= 100:
+                        print("\n\n\n\n\t\t\t\t  " + players[index] + " wins!")
+                        break
+                time.sleep(5)
+                init()
+                break
+    except KeyboardInterrupt:
+        exitGame()
+
+
+def exitGame():
+    Ascii.clear()
+    print("\n\n\n\n\t\t\t\t  Goodbye! :(")
+    time.sleep(4)
+    exit()
 
 
 def role(score):
     Ascii.clear()
     dice1 = random.randrange(1, 6)
     dice2 = random.randrange(1, 6)
-    for i in range(3):
+    for i in range(2):
         print("\n\n\n\n\t\t\t\t  Rolling...")
         print(Ascii.rollingDice1)
         time.sleep(1)
@@ -246,7 +260,7 @@ def init():
             break
 
         elif key == Getch.ENTER_KEY and currentState == menuStates.EXIT:
-            exit()
+            exitGame()
             break
 
         elif key == Getch.ENTER_KEY and currentState == menuStates.RULES:

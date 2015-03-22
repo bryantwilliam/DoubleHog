@@ -14,9 +14,10 @@ def clear():
     """
     Clears the console screen using the built in commands on a operating
     system (Linux and windows)
-    This is pretty much the only comment I'm going to make because I never really comment (which is bad)
+    This is pretty much the only comment I'm going to make because I'm extremely lazy (which is bad)
     """
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def capStart(word):
     word = word.lower()
@@ -26,6 +27,7 @@ def capStart(word):
     letters[0] = letters[0].upper()
     word = "".join(letters)
     return word
+
 
 menuStart = """\nUse the arrow keys...\n\n\n\n\n\t\t\t  Welcome to Double Hog!!!\n
  \tDouble Hog is a fun dice game played using two six-sided dice.
@@ -171,6 +173,7 @@ def getdiceAnimation2(playerName):
         "\n\t\t\t\t\t\t \\'__'\/"
     return dice2
 
+
 rollingDice1 = """\n
                                    ______
                                   /     /\\
@@ -191,9 +194,9 @@ rollingDice2 = """\n
                                   \____'__\|
 """
 
-#0-6
-#7-13
-#14-20
+# 0-6
+# 7-13
+# 14-20
 diceRoles = {1: "[     ][  o  ][     ]",
              2: "[     ][ o o ][     ]",
              3: "[  o  ][ o o ][     ]",
@@ -208,4 +211,12 @@ score = """
                          `--. \/ __/ _ \| '__/ _ \\
                         /\__/ / (_| (_) | | |  __/
                         \____/ \___\___/|_|  \___|
+"""
+
+arrow ="""
+                  .
+   .. ............;;.
+    ..::::::::::::;;;;.
+  . . ::::::::::::;;:'
+                  :'
 """

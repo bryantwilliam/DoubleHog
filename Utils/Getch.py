@@ -23,10 +23,12 @@ elif platform.system() == "Linux":
     UP_KEY = 65
     DOWN_KEY = 66
 
+
 class _Getch:
     """
     Gets a single character from standard input.
     """
+
     def __init__(self):
         try:
             self.impl = _GetchWindows()
@@ -40,6 +42,7 @@ class _Getch:
 class _GetchUnix:
     def __call__(self):
         import sys, tty, termios
+
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
         try:
@@ -58,4 +61,5 @@ class _GetchWindows:
     def __call__(self):
         # noinspection PyUnresolvedReferences
         import msvcrt
+
         return msvcrt.getch()
