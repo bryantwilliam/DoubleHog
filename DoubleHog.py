@@ -12,8 +12,8 @@ if sys.version_info[0] == 2:
         # noinspection PyUnresolvedReferences
         return raw_input(text)
 
-menuStates = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
-turnStates = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose,
+MENU_STATES = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
+TURN_STATES = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose,
                         PASS=Ascii.passLabel)
 
 def displayScore(players, scores):
@@ -117,64 +117,6 @@ def startGame():
     except KeyboardInterrupt:
         exitGame()
 
-def takeTurn(player, players, scores, index):
-    for i in range(0, 1):
-        Ascii.clear()
-
-        print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
-
-        time.sleep(1)
-
-        Ascii.clear()
-        print(Ascii.roleLabel + Ascii.getdiceAnimation2(player) + Ascii.passLabel)
-        time.sleep(1)
-
-    roleState = turnStates.ROLE_CHOOSE
-    passState = turnStates.PASS
-
-    Ascii.clear()
-    print(roleState + Ascii.getdiceAnimation1(player) + passState)
-
-    getch = Getch._Getch()
-    while True:
-        Ascii.clear()
-        print(roleState + Ascii.getdiceAnimation1(player) + passState)
-        key = ord(getch())
-        if key == Getch.DOWN_KEY:
-            if roleState == turnStates.ROLE_CHOOSE:
-                roleState = turnStates.ROLE
-                passState = turnStates.PASS_CHOOSE
-        elif key == Getch.UP_KEY:
-            if passState == turnStates.PASS_CHOOSE:
-                roleState = turnStates.ROLE_CHOOSE
-                passState = turnStates.PASS
-        elif key == Getch.ENTER_KEY:
-            playerScore = scores[players.index(player)]
-            if passState == turnStates.PASS_CHOOSE:
-                Ascii.clear()
-                print("\n\n\n\n\t\t\t\t  You chose to pass...")
-                print(Ascii.arrow)
-                time.sleep(4)
-                displayScore(players, scores)
-                break
-            elif roleState == turnStates.ROLE_CHOOSE:
-                role = role(playerScore)
-                scores[index] = role[0]
-                displayScore(players, scores)
-                break
-
-    for score in scores:
-        if score >= 100:
-            # This means the player has won
-            return [False, role[1]]
-    return [True, role[1]]
-
-def exitGame():
-    Ascii.clear()
-    print("\n\n\n\n\t\t\t\t  Goodbye! :(")
-    time.sleep(4)
-    exit()
-
 
 def role(score):
     Ascii.clear()
@@ -229,6 +171,74 @@ def role(score):
     return [score, rolledOne]
 
 
+def takeTurn(player, players, scores, index):
+    for i in range(0, 1):
+        Ascii.clear()
+
+        print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
+
+        time.sleep(1)
+
+        Ascii.clear()
+        print(Ascii.roleLabel + Ascii.getdiceAnimation2(player) + Ascii.passLabel)
+        time.sleep(1)
+
+    roleState = TURN_STATES.ROLE_CHOOSE
+    passState = TURN_STATES.PASS
+
+    Ascii.clear()
+    print(roleState + Ascii.getdiceAnimation1(player) + passState)
+
+    getch = Getch._Getch()
+    rl = []
+    while True:
+        Ascii.clear()
+        print(roleState + Ascii.getdiceAnimation1(player) + passState)
+        key = ord(getch())
+        if key == Getch.DOWN_KEY:
+            if roleState == TURN_STATES.ROLE_CHOOSE:
+                roleState = TURN_STATES.ROLE
+                passState = TURN_STATES.PASS_CHOOSE
+        elif key == Getch.UP_KEY:
+            if passState == TURN_STATES.PASS_CHOOSE:
+                roleState = TURN_STATES.ROLE_CHOOSE
+                passState = TURN_STATES.PASS
+        elif key == Getch.ENTER_KEY:
+            playerScore = scores[players.index(player)]
+            if passState == TURN_STATES.PASS_CHOOSE:
+                Ascii.clear()
+                print("\n\n\n\n\t\t\t\t  You chose to pass...")
+                print(Ascii.arrow)
+                time.sleep(4)
+                displayScore(players, scores)
+                break
+            elif roleState == TURN_STATES.ROLE_CHOOSE:
+                rl = role(playerScore)
+                scores[index] = rl[0]
+                displayScore(players, scores)
+                for score in scores:
+                    if score >= 100:
+                        # This means the player has won
+                        return [False, rl[1]]
+                        #       continue?, rolled one?
+                if len(rl) == 0:
+                    return [True, True]
+                else:
+                    return [True, rl[1]]
+
+    for score in scores:
+        if score >= 100:
+            # This means the player has won
+            return [False, rl[1]]
+    return [True, rl[1]]
+
+def exitGame():
+    Ascii.clear()
+    print("\n\n\n\n\t\t\t\t  Goodbye! :(")
+    time.sleep(4)
+    exit()
+
+
 def displayRules():
     rules = Ascii.rules
     min = 1
@@ -262,25 +272,25 @@ def displayRules():
 
 def init():
     getch = Getch._Getch()
-    currentState = menuStates.START
+    currentState = MENU_STATES.START
     Ascii.clear()
     print(Ascii.menuStart)
 
     while True:
         key = ord(getch())
-        if key == Getch.ENTER_KEY and currentState == menuStates.START:
+        if key == Getch.ENTER_KEY and currentState == MENU_STATES.START:
             startGame()
             break
 
-        elif key == Getch.ENTER_KEY and currentState == menuStates.EXIT:
+        elif key == Getch.ENTER_KEY and currentState == MENU_STATES.EXIT:
             exitGame()
             break
 
-        elif key == Getch.ENTER_KEY and currentState == menuStates.RULES:
+        elif key == Getch.ENTER_KEY and currentState == MENU_STATES.RULES:
             displayRules()
             break
         else:
-            states = [menuStates.START, menuStates.RULES, menuStates.EXIT]
+            states = [MENU_STATES.START, MENU_STATES.RULES, MENU_STATES.EXIT]
             if key == Getch.LEFT_KEY:
                 if states.index(currentState) == 0:
                     currentState = states[2]
