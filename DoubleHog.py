@@ -215,20 +215,20 @@ def takeTurn(player, players, scores, index):
                 rl = role(playerScore)
                 scores[index] = rl[0]
                 displayScore(players, scores)
-
-        if len(rl) == 0:
-            return [True, True]
+            if len(rl) == 0:
+                return [True, True]
             #       continue?, rolled one?
 
-        else:
-            for score in scores:
-                if score >= 100:
-                # This means the player has won
-                    return [False, rl[1]]
+            else:
+                for score in scores:
+                    if score >= 100:
+                        # This means the player has won
+                        return [False, rl[1]]
+                        #       continue?, rolled one?
+
+                    return [True, rl[1]]
                     #       continue?, rolled one?
 
-                return [True, rl[1]]
-                #       continue?, rolled one?
 
 
 
