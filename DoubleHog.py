@@ -225,7 +225,7 @@ def takeTurn(player, players, scores, index):
                 if score >= 100:
                 # This means the player has won
                     return [False, rl[1]]
-            #       continue?, rolled one?
+                    #       continue?, rolled one?
 
                 return [True, rl[1]]
                 #       continue?, rolled one?
