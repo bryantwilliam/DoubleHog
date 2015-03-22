@@ -211,26 +211,27 @@ def takeTurn(player, players, scores, index):
                 print(Ascii.arrow)
                 time.sleep(4)
                 displayScore(players, scores)
-                break
             elif roleState == TURN_STATES.ROLE_CHOOSE:
                 rl = role(playerScore)
                 scores[index] = rl[0]
                 displayScore(players, scores)
-                for score in scores:
-                    if score >= 100:
-                        # This means the player has won
-                        return [False, rl[1]]
-                        #       continue?, rolled one?
-                if len(rl) == 0:
-                    return [True, True]
-                else:
-                    return [True, rl[1]]
 
-    for score in scores:
-        if score >= 100:
-            # This means the player has won
-            return [False, rl[1]]
-    return [True, rl[1]]
+        if len(rl) == 0:
+            return [True, True]
+            #       continue?, rolled one?
+
+        else:
+            for score in scores:
+                if score >= 100:
+                # This means the player has won
+                    return [False, rl[1]]
+            #       continue?, rolled one?
+
+                return [True, rl[1]]
+                #       continue?, rolled one?
+
+
+
 
 def exitGame():
     Ascii.clear()
