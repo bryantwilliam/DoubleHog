@@ -17,7 +17,7 @@ TURN_STATES = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabe
                         PASS=Ascii.passLabel)
 
 def displayScore(players, scores):
-    time.sleep(3)
+    time.sleep(2)
     Ascii.clear()
     print(Ascii.score)
 
