@@ -21,7 +21,7 @@ def displayScore(players, scores):
     Ascii.clear()
     print(Ascii.score)
 
-    message = "\n" + (4 - len(players)) * "\t"
+    message = "\n" + (5 - len(players)) * "\t"
     for p in range(0, len(players)):
         message += "\t" + players[p]
         if p != len(players) - 1:
