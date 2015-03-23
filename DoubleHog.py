@@ -34,7 +34,7 @@ def displayScore(players, scores):
         if s != len(scores) - 1:
             message += "\t | "
     print(message)
-    time.sleep(7)
+    time.sleep(5)
 
 def startGame():
     try:
@@ -152,21 +152,25 @@ def role(score):
         rolledOne = True
         if dice1 == dice2:
             # Double 1
-            score += 25
-            print("\t\t" + str(score) + " points will be added to your score...")
+            factor = 25
+            score += factor
+            print("\t\t" + str(factor) + " points will be added to your score...")
         else:
             # Single 1
-            score = score - (dice1 + dice2)
-            print("\t\t" + str(dice1 + dice2) + " points will be deducted from your score...")
+            factor = dice1 + dice2
+            score -= factor
+            print("\t\t" + str(factor) + " points will be deducted from your score...")
 
     elif dice1 == dice2:
         # Regular double.
-        score += 2 * (dice1 + dice2)
-        print("\t\t" + str(2 * (dice1 + dice2)) + " points will added to your score...")
+        factor = 2 * (dice1 + dice2)
+        score += factor
+        print("\t\t" + str(factor) + " points will added to your score...")
     else:
         # All other cases.
-        score += dice1 + dice2
-        print("\t\t" + str(dice1 + dice2) + " points will be added to your score...")
+        factor = dice1 + dice2
+        score += factor
+        print("\t\t" + str(factor) + " points will be added to your score...")
     print("\t\tYou now have " + str(score) + " points")
     return [score, rolledOne]
 
@@ -209,7 +213,7 @@ def takeTurn(player, players, scores, index):
                 Ascii.clear()
                 print("\n\n\n\n\t\t\t\t  You chose to pass...")
                 print(Ascii.arrow)
-                time.sleep(2)
+                time.sleep(1)
                 displayScore(players, scores)
             elif roleState == TURN_STATES.ROLE_CHOOSE:
                 rl = role(playerScore)
