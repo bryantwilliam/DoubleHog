@@ -28,7 +28,7 @@ def displayScore(players, scores):
             message += "\t | "
     print(message)
 
-    message = (4 - len(scores)) * "\t"
+    message = (5 - len(scores)) * "\t"
     for s in range(0, len(scores)):
         message += "\t" + str(scores[s])
         if s != len(scores) - 1:
@@ -138,7 +138,7 @@ def role(score):
     print("\t\t\t\t" + diceAni1[7:14] + "\t" + diceAni2[7:14])
     print("\t\t\t\t" + diceAni1[14:] + "\t" + diceAni2[14:])
 
-    youRolledMsg = "\n\n\t\t\tYou rolled "
+    youRolledMsg = "\n\n\t\t\t\tYou rolled "
     if dice1 == dice2:
         youRolledMsg += "2 " + str(dice1) + "'s"
     else:
