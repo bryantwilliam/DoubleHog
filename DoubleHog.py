@@ -118,8 +118,8 @@ def startGame():
 
 def role(score):
     Ascii.clear()
-    dice1 = random.randrange(1, 6)
-    dice2 = random.randrange(1, 6)
+    dice1 = random.randrange(1, 7)
+    dice2 = random.randrange(1, 7)
     for i in range(2):
         print("\n\n\n\n\t\t\t\t  Rolling...")
         print(Ascii.rollingDice1)
