@@ -54,10 +54,6 @@ class _GetchUnix:
 
 
 class _GetchWindows:
-    def __init__(self):
-        # noinspection PyUnresolvedReferences
-        import msvcrt
-
     def __call__(self):
         # noinspection PyUnresolvedReferences
         import msvcrt
