@@ -228,8 +228,8 @@ def takeTurn(player, players, scores, index):
                         return [False, rl[1]]
                         #       continue?, rolled one?
 
-                    return [True, rl[1]]
-                    #       continue?, rolled one?
+                return [True, rl[1]]
+                #       continue?, rolled one?
 
 
 
