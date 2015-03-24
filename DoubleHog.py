@@ -98,6 +98,7 @@ def startGame():
                     turn = takeTurn(player, players, scores, index)
                     cont = turn[0]
                     if turn[1]:
+                        cont = False
                         break
                     else:
                         continue
@@ -105,9 +106,9 @@ def startGame():
             if cont:
                 continue
             else:
-                for index in range(0, len(players)):
-                    if scores[index] >= 100:
-                        print("\n\n\n\n\t\t\t\t  " + players[index] + " wins!")
+                for s in range(0, len(players)):
+                    if scores[s] >= 100:
+                        print("\n\n\n\n\t\t\t\t  " + players[s] + " wins!")
                         break
                 time.sleep(5)
                 init()
