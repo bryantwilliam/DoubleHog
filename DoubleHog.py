@@ -92,22 +92,18 @@ def startGame():
 
         while True:
             index = 0
-            for player in players:
+            while index < len(players):
                 while True:
-                    turn = takeTurn(player, players, scores, index)
-                    cont = turn[0]
-                    rolledOne = turn[1]
-                    if not cont:
-                        for s in range(0, len(players)):
-                            if scores[s] >= 100:
-                                print("\n\n\n\n\t\t\t\t  " + players[s] + " wins!")
-                                time.sleep(5)
-                                init()
-                                break
-                    elif rolledOne:
+                    rolledOne = takeTurn(index, players, scores)
+                    for s in range(0, len(players)):
+                        if scores[s] >= 100:
+                            print("\n\n\n\n\t\t\t\t  " + players[s] + " wins!")
+                            time.sleep(8)
+                            init()
+                            return
+                    if rolledOne:
                         break
-                    else:
-                        continue
+
                 index += 1
 
     except KeyboardInterrupt:
@@ -171,29 +167,29 @@ def role(score):
     return [score, rolledOne]
 
 
-def takeTurn(player, players, scores, index):
+def takeTurn(playerIndex, players, scores):
     for i in range(0, 1):
         Ascii.clear()
 
-        print(Ascii.roleLabel + Ascii.getdiceAnimation1(player) + Ascii.passLabel)
+        print(Ascii.roleLabel + Ascii.getdiceAnimation1(players[playerIndex]) + Ascii.passLabel)
 
         time.sleep(1)
 
         Ascii.clear()
-        print(Ascii.roleLabel + Ascii.getdiceAnimation2(player) + Ascii.passLabel)
+        print(Ascii.roleLabel + Ascii.getdiceAnimation2(players[playerIndex]) + Ascii.passLabel)
         time.sleep(1)
 
     roleState = TURN_STATES.ROLE_CHOOSE
     passState = TURN_STATES.PASS
 
     Ascii.clear()
-    print(roleState + Ascii.getdiceAnimation1(player) + passState)
+    print(roleState + Ascii.getdiceAnimation1(players[playerIndex]) + passState)
 
     getch = Getch._Getch()
     rl = []
     while True:
         Ascii.clear()
-        print(roleState + Ascii.getdiceAnimation1(player) + passState)
+        print(roleState + Ascii.getdiceAnimation1(players[playerIndex]) + passState)
         key = ord(getch())
         if key == Getch.DOWN_KEY:
             if roleState == TURN_STATES.ROLE_CHOOSE:
@@ -204,7 +200,7 @@ def takeTurn(player, players, scores, index):
                 roleState = TURN_STATES.ROLE_CHOOSE
                 passState = TURN_STATES.PASS
         elif key == Getch.ENTER_KEY:
-            playerScore = scores[players.index(player)]
+            playerScore = scores[players[playerIndex]]
             if passState == TURN_STATES.PASS_CHOOSE:
                 Ascii.clear()
                 print("\n\n\n\n\t\t\t\t  You chose to pass...")
@@ -214,21 +210,14 @@ def takeTurn(player, players, scores, index):
                 rl = []
             elif roleState == TURN_STATES.ROLE_CHOOSE:
                 rl = role(playerScore)
-                scores[index] = rl[0]
+                score = rl[0]
+                rolledOne = rl[1]
+                scores[playerIndex] = score
                 displayScore(players, scores)
-            if len(rl) == 0 or rl[1]:
-                return [True, True]
-            #       continue?, rolled one?
+            if len(rl) == 0 or rolledOne:
+                return True
 
-            else:
-                for score in scores:
-                    if score >= 100:
-                        # This means the player has won
-                        return [False, rl[1]]
-                        #       continue?, rolled one?
-
-                return [True, rl[1]]
-            #   continue?, rolled one?
+            return rolledOne
 
 
 
