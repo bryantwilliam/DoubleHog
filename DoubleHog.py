@@ -106,12 +106,10 @@ def startGame():
             if cont:
                 continue
             else:
-                for s in range(0, len(players)):
-                    if scores[s] >= 100:
-                        print("\n\n\n\n\t\t\t\t  " + players[s] + " wins!")
-                        time.sleep(5)
-                        init()
-                        break
+                print("\n\n\n\n\t\t\t\t  " + players[s] + " wins!")
+                time.sleep(5)
+                init()
+                break
     except KeyboardInterrupt:
         exitGame()
 
