@@ -214,6 +214,7 @@ def takeTurn(player, players, scores, index):
                 print(Ascii.arrow)
                 time.sleep(1)
                 displayScore(players, scores)
+                rl = []
             elif roleState == TURN_STATES.ROLE_CHOOSE:
                 rl = role(playerScore)
                 scores[index] = rl[0]
