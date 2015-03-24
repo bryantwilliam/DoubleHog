@@ -97,8 +97,8 @@ def startGame():
                 while True:
                     turn = takeTurn(player, players, scores, index)
                     cont = turn[0]
-                    if turn[1]:
-                        cont = False
+                    rolledOne = turn[1]
+                    if rolledOne:
                         break
                     else:
                         continue
@@ -218,7 +218,7 @@ def takeTurn(player, players, scores, index):
                 rl = role(playerScore)
                 scores[index] = rl[0]
                 displayScore(players, scores)
-            if len(rl) == 0:
+            if len(rl) == 0 or rl[1]:
                 return [True, True]
             #       continue?, rolled one?
 
@@ -230,7 +230,7 @@ def takeTurn(player, players, scores, index):
                         #       continue?, rolled one?
 
                 return [True, rl[1]]
-                #       continue?, rolled one?
+            #   continue?, rolled one?
 
 
 
