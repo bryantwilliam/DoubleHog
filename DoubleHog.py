@@ -105,8 +105,6 @@ def startGame():
             if cont:
                 continue
             else:
-                # TODO:
-                # Make player win
                 for index in range(0, len(players)):
                     if scores[index] >= 100:
                         print("\n\n\n\n\t\t\t\t  " + players[index] + " wins!")
