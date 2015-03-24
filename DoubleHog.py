@@ -97,17 +97,17 @@ def startGame():
                     turn = takeTurn(player, players, scores, index)
                     cont = turn[0]
                     rolledOne = turn[1]
-                    if rolledOne:
-                        break
-                    elif not rolledOne or not cont:
-                        continue
-                    else:
+                    if cont:
                         for s in range(0, len(players)):
                             if scores[s] >= 100:
                                 print("\n\n\n\n\t\t\t\t  " + players[s] + " wins!")
                                 time.sleep(5)
                                 init()
                                 break
+                    elif rolledOne:
+                        break
+                    else:
+                        continue
                 index += 1
 
     except KeyboardInterrupt:
