@@ -6,6 +6,7 @@ import random
 
 from Utils import Enums, Getch, Ascii
 
+
 # In case run with python 2 instead of 3....
 if sys.version_info[0] == 2:
     def input(text):
@@ -14,7 +15,8 @@ if sys.version_info[0] == 2:
 
 MENU_STATES = Enums.enum(START=Ascii.menuStart, RULES=Ascii.menuRules, EXIT=Ascii.menuExit)
 TURN_STATES = Enums.enum(ROLE_CHOOSE=Ascii.roleLabel_choose, ROLE=Ascii.roleLabel, PASS_CHOOSE=Ascii.passLabel_choose,
-                        PASS=Ascii.passLabel)
+                         PASS=Ascii.passLabel)
+
 
 def displayScore(players, scores):
     time.sleep(2)
@@ -35,6 +37,7 @@ def displayScore(players, scores):
             message += "\t | "
     print(message)
     time.sleep(5)
+
 
 def startGame():
     try:
@@ -218,9 +221,6 @@ def takeTurn(playerIndex, players, scores):
                 return True
 
             return rolledOne
-
-
-
 
 
 def exitGame():
