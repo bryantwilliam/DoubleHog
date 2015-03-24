@@ -200,7 +200,7 @@ def takeTurn(playerIndex, players, scores):
                 roleState = TURN_STATES.ROLE_CHOOSE
                 passState = TURN_STATES.PASS
         elif key == Getch.ENTER_KEY:
-            playerScore = scores[players[playerIndex]]
+            playerScore = scores[playerIndex]
             if passState == TURN_STATES.PASS_CHOOSE:
                 Ascii.clear()
                 print("\n\n\n\n\t\t\t\t  You chose to pass...")
