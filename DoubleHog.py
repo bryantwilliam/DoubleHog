@@ -91,7 +91,6 @@ def startGame():
         time.sleep(3)
 
         while True:
-            cont = True
             index = 0
             for player in players:
                 while True:
